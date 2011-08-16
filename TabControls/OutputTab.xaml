@@ -1,0 +1,55 @@
+﻿<TabItem x:Class="ProcessCapture.TabControls.OutputTab"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:pc="clr-namespace:ProcessCapture"
+         xmlns:l="clr-namespace:ProcessCapture.TabControls" xmlns:pdf="clr-namespace:ProcessCapture.PDF"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <TabItem.Resources>
+        <l:ObjectToBooleanConverter x:Key="converter"/>
+    </TabItem.Resources>
+    <Grid>
+       
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Margin="5" Style="{DynamicResource GeneralText}">To output a PDF containing the captured information click the button below after entering a location on disk to save the PDF to.</TextBlock>
+
+        <Grid HorizontalAlignment="Stretch" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox IsReadOnly="True" x:Name="fileLocation" Grid.Column="0" FontSize="13"  TabIndex="3" MaxLines="1" MaxLength="30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource TextBox_Singleline}" TextWrapping="Wrap" AcceptsReturn="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Text=""/>
+            <Button Grid.Column="1" Margin="5" Click="btnSaveFile_Click" x:Name="btnSaveFile" Style="{DynamicResource Button_RectangleDropShadow}" VerticalAlignment="Center">
+                <TextBlock Text="Select file" TextWrapping="Wrap" FontFamily="{DynamicResource Font_Base}" FontSize="13" FontWeight="Normal" Foreground="{DynamicResource Brush_TextDarkGrey}" Margin="12,0"/>
+            </Button>
+            <Button Grid.Column="2" Margin="5" Click="btnClear_Click" x:Name="btnClear" Style="{DynamicResource Button_RectangleDropShadow}" VerticalAlignment="Center" IsEnabled="{Binding
+                              ElementName=fileLocation,
+                              Path=Text,
+                              Converter={StaticResource converter}}">
+                <TextBlock Text="Clear" TextWrapping="Wrap" FontFamily="{DynamicResource Font_Base}" FontSize="13" FontWeight="Normal" Foreground="{DynamicResource Brush_TextDarkGrey}" Margin="12,0"/>
+            </Button>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
+            <TextBlock Margin="5" VerticalAlignment="Center" Style="{DynamicResource GeneralText}">Include module info:</TextBlock>    
+            <CheckBox x:Name="modules" VerticalAlignment="Center" IsChecked="False" Margin="5"/>
+            
+            <Button Margin="5" x:Name="btnGeneratePDF" Click="btnGeneratePDF_Click" Style="{DynamicResource Button_RectangleDropShadow}" VerticalAlignment="Center" IsEnabled="{Binding
+                              ElementName=fileLocation,
+                              Path=Text,
+                              Converter={StaticResource converter}}">
+                <TextBlock Text="Generate Document" TextWrapping="Wrap" FontFamily="{DynamicResource Font_Base}" FontSize="13" FontWeight="Normal" Foreground="{DynamicResource Brush_TextDarkGrey}" Margin="12,0"/>
+            </Button>
+            
+        </StackPanel>
+        
+        <!--<pdf:PDFViewer x:Name="pdfViewer"  Grid.Row="3" VerticalAlignment="Stretch" />-->
+        
+    </Grid>
+</TabItem>

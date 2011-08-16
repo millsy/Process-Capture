@@ -1,0 +1,96 @@
+﻿<Window x:Class="ProcessCapture.ProcessLayoutWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:DiagramDesigner"
+        xmlns:c="clr-namespace:DiagramDesigner.Controls"
+    Title="Process Window" xmlns:pc="clr-namespace:ProcessCapture" WindowState="Normal" WindowStyle="None"
+        AllowsTransparency="False" ResizeMode="CanResizeWithGrip"
+        Background="Transparent" WindowStartupLocation="CenterScreen" x:Name="window" Loaded="Window_Loaded" Activated="window_Activated">
+    <Window.Resources>
+
+    </Window.Resources>
+        <Border BorderBrush="Black"            
+            BorderThickness="2,2,2,2"
+            CornerRadius="10"
+            Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" MouseLeftButtonDown="MoveWindow" >
+                <Border BorderBrush="Black"            
+            BorderThickness="0"
+            CornerRadius="10,10,0,0"
+            Background="Orange">
+                    <Grid>
+                        <TextBlock Text="powered by OpenSpan Inc" TextWrapping="Wrap" FontFamily="{DynamicResource Font_Base}" FontWeight="Bold" FontSize="10" VerticalAlignment="Center" Foreground="Black" Margin="5,5,1,5"/>
+
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,5,0" >
+                            <Button x:Name="btnMinimize" Margin="0,0,6,0" Style="{DynamicResource Button_WindowControl}">
+                                <Image Source="Images/Icons/icoMinimize.png" Stretch="None"/>
+                            </Button>
+                            <Button x:Name="btnMaximize" Margin="0,0,6,0" Style="{DynamicResource Button_WindowControl}">
+                                <Image Source="Images/Icons/icoMaximize.png" Stretch="None"/>
+                            </Button>
+                            <Button x:Name="btnClose" Style="{DynamicResource Button_WindowControl}">
+                                <Image Source="Images/Icons/icoClose.png" Stretch="None"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1" x:Name="mygrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/> 
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0" LastChildFill="False" HorizontalAlignment="Stretch" Width="Auto" Background="#FFF2F2F2">
+                    <ToolBar x:Name="tbToolBar" DockPanel.Dock="Left"
+               Background="{x:Null}">
+                                              
+                       
+                        <Button ToolTip="Save diagram" x:Name="btnSave" Click="btnSave_Click">
+                            <Image Width="30" Stretch="Uniform" Source="Images/save.png"/>
+                        </Button>
+                        
+                    </ToolBar>
+
+                </DockPanel>             
+
+                <Grid Grid.Row="1" Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="265"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <!-- Toolbox -->
+                    <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                        <Expander Header="Flow Chart" Content="{StaticResource FlowChartStencils}" IsExpanded="True"/>
+                        <Expander Header="Screenshots" IsExpanded="False" >
+                            <s:Toolbox ItemSize="80,60" SnapsToDevicePixels="True" x:Name="screenShots">
+                                
+                            </s:Toolbox>
+                        </Expander>
+                    </StackPanel>
+                    <!-- GridSplitter -->
+                    <GridSplitter Focusable="False" Width="2" Background="LightGray"
+                    VerticalAlignment="Stretch" HorizontalAlignment="Right"/>
+
+                    <GroupBox Grid.Row="1" Header="Diagram" Grid.Column="1" Margin="3,0,0,0">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto">
+                            <s:DesignerCanvas Focusable="true" x:Name="drawingCanvas"
+                            Background="{StaticResource WindowBackgroundBrush}"
+                            Margin="10" FocusVisualStyle="{x:Null}">
+                            </s:DesignerCanvas>
+                        </ScrollViewer>
+                    </GroupBox>
+                </Grid>
+            </Grid>
+
+        </Grid>
+    </Border>
+</Window>
+

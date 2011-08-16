@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F347A269-63E2-4C4E-A83B-28A0CCC36EC7}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ProcessCapture</RootNamespace>
+    <AssemblyName>ProcessCapture</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
+    <Utf8Output>true</Utf8Output>
+    <ApplicationIcon>Images\OpenSpan.ico</ApplicationIcon>
+    <StartupObject>OpenSpanWPF.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AviFile, Version=1.0.4056.10395, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Z:\chris\Downloads\aviFileWrapperDemo_src\AviFile\bin\Debug\AviFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.shdocvw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>c:\windows\system32\Interop.shdocvw.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft.NET\Primary Interop Assemblies\Microsoft.mshtml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <HintPath>.\Microsoft.Office.Interop.Word.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework.Luna">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TallComponents.PDF.Layout, Version=3.0.54.0, Culture=neutral, PublicKeyToken=76bf2dedaa68ccb5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\TallPDF\TallComponents.PDF.Layout.dll</HintPath>
+    </Reference>
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\CompositeAfterDemo\CompositeAfterDemo\bin\Debug\WPFToolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="DiagramDesigner\Resources\ApplicationToolbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DiagramDesigner\Resources\Connection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DiagramDesigner\Resources\DesignerItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DiagramDesigner\Resources\Stencils\FlowChartStencils.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DiagramDesigner\Resources\Stencils\ShapeStencils.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DiagramDesigner\Resources\Styles\Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DiagramDesigner\Resources\Styles\GroupBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DiagramDesigner\Resources\Styles\ScrollBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DiagramDesigner\Resources\Styles\Shared.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DiagramDesigner\Resources\Styles\ToolBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DiagramDesigner\Resources\Toolbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DiagramDesigner\Resources\ToolboxItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ImageEditingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OpenSpanWPFWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PDF\PDFViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProcessLayoutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TabControls\OutputTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TabControls\ProcessInfoTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TabControls\ScreenCaptureTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ImageLayout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands.cs" />
+    <Compile Include="DateTimeConverter.cs" />
+    <Compile Include="DiagramDesigner\Connection.cs" />
+    <Compile Include="DiagramDesigner\ConnectionAdorner.cs" />
+    <Compile Include="DiagramDesigner\Connector.cs" />
+    <Compile Include="DiagramDesigner\ConnectorAdorner.cs" />
+    <Compile Include="DiagramDesigner\Controls\DragThumb.cs" />
+    <Compile Include="DiagramDesigner\Controls\RelativePositionPanel.cs" />
+    <Compile Include="DiagramDesigner\Controls\ResizeThumb.cs" />
+    <Compile Include="DiagramDesigner\DesignerCanvas.Commands.cs" />
+    <Compile Include="DiagramDesigner\DesignerCanvas.cs" />
+    <Compile Include="DiagramDesigner\DesignerItem.cs" />
+    <Compile Include="DiagramDesigner\IGroupable.cs" />
+    <Compile Include="DiagramDesigner\ISelectable.cs" />
+    <Compile Include="DiagramDesigner\PathFinder.cs" />
+    <Compile Include="DiagramDesigner\RubberbandAdorner.cs" />
+    <Compile Include="DiagramDesigner\SelectionService.cs" />
+    <Compile Include="DiagramDesigner\Toolbox.cs" />
+    <Compile Include="DiagramDesigner\ToolboxItem.cs" />
+    <Compile Include="Hotkey\Hotkey.cs" />
+    <Compile Include="ImageEditingWindow.xaml.cs">
+      <DependentUpon>ImageEditingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MonitorActivate\ScreenCapture.cs" />
+    <Compile Include="MonitorActivate\MonitorActivate.cs" />
+    <Compile Include="MonitorActivate\WindowMgr.cs" />
+    <Compile Include="OpenSpanWPFWindow.xaml.cs">
+      <DependentUpon>OpenSpanWPFWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PDF\PDFDocument.cs" />
+    <Compile Include="PDF\PDFForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PDF\PDFForm.Designer.cs">
+      <DependentUpon>PDFForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PDF\PDFViewer.xaml.cs">
+      <DependentUpon>PDFViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessLayoutWindow.xaml.cs">
+      <DependentUpon>ProcessLayoutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Project.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Screenshot\Screen.cs" />
+    <Compile Include="Screenshot\ScreenImage.cs" />
+    <Compile Include="TabControls\OutputTab.xaml.cs">
+      <DependentUpon>OutputTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TabControls\ProcessInfoTab.xaml.cs">
+      <DependentUpon>ProcessInfoTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TabControls\ScreenCaptureTab.xaml.cs">
+      <DependentUpon>ScreenCaptureTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ImageLayout.xaml.cs">
+      <DependentUpon>ImageLayout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Word\WordDocument.cs" />
+    <EmbeddedResource Include="PDF\PDFForm.resx">
+      <DependentUpon>PDFForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Template.dot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Template.dotx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icons\icoClose.png" />
+    <Resource Include="Images\Icons\icoCloseAll.png" />
+    <Resource Include="Images\Icons\icoCloseModal.png" />
+    <Resource Include="Images\Icons\icoCloseSmall.png" />
+    <Resource Include="Images\Icons\icoCloseWhite.png" />
+    <Resource Include="Images\Icons\icoCoverplan.png" />
+    <Resource Include="Images\Icons\icoEndCall.png" />
+    <Resource Include="Images\Icons\icoError.png" />
+    <Resource Include="Images\Icons\icoHoldCall.png" />
+    <Resource Include="Images\Icons\icoHome.png" />
+    <Resource Include="Images\Icons\icoInfo.png" />
+    <Resource Include="Images\Icons\icoMaximize.png" />
+    <Resource Include="Images\Icons\icoMinimize.png" />
+    <Resource Include="Images\Icons\icoRefund.png" />
+    <Resource Include="Images\Icons\icoTransfer.png" />
+    <Resource Include="Images\Icons\icoWarning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\openspanLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="AxAcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete.png" />
+    <Resource Include="Images\load.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="DiagramDesigner\Resources\Images\AlignObjectsBottom.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\AlignObjectsCenteredHorizontal.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\AlignObjectsCenteredVertical.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\AlignObjectsLeft.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\AlignObjectsRight.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\AlignObjectsTop.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\BringForward.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\BringToFront.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\Copy.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\Cut.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\Delete.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\DistributeObjectsHorizontal.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\DistributeObjectsVertical.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\GenericDocument.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\Group.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\OpenFolder.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\Paste.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\PasteBig.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\Print.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\Save.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\SendBackward.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\SendToBack.png" />
+    <Resource Include="DiagramDesigner\Resources\Images\Ungroup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Downloads\Streamworks\CStreamWork.csproj">
+      <Project>{BF45D3F3-FA6A-49A7-ABC2-6936D61CF662}</Project>
+      <Name>CStreamWork</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\OpenSpan.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

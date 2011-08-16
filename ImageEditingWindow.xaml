@@ -1,0 +1,138 @@
+﻿<Window x:Class="ProcessCapture.ImageEditingWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Image Editing Window" xmlns:pc="clr-namespace:ProcessCapture" WindowState="Normal" WindowStyle="None"
+        AllowsTransparency="False" ResizeMode="CanResizeWithGrip"
+        Background="Transparent" WindowStartupLocation="CenterScreen">
+    <Window.CommandBindings>
+        <CommandBinding x:Name="hideImage" Command="pc:Commands.HideImage" CanExecute="hideImage_CanExecute" Executed="hideImage_Executed"/>
+        <CommandBinding x:Name="saveImage" Command="pc:Commands.SaveImage" CanExecute="saveImage_CanExecute" Executed="saveImage_Executed"/>
+        <CommandBinding x:Name="undoImage" Command="pc:Commands.Undo" CanExecute="undoImage_CanExecute" Executed="undoImage_Executed"/> 
+    </Window.CommandBindings>
+    <Window.Resources>
+        <DataTemplate x:Key="SolidColorTemplate" DataType="{x:Type SolidColorBrush}">
+            <DockPanel Margin="1">
+                <Border Background="{Binding}" Width="15" Height="15" DockPanel.Dock="Left"/>
+                <TextBlock Text="{Binding}" Margin="5,0,0,0"/>
+            </DockPanel>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Border BorderBrush="Black"            
+            BorderThickness="2,2,2,2"
+            CornerRadius="10"
+            Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" MouseLeftButtonDown="MoveWindow" >
+                <Border BorderBrush="Black"            
+            BorderThickness="0"
+            CornerRadius="10,10,0,0"
+            Background="Orange">
+                    <Grid>
+                        <TextBlock Text="powered by OpenSpan Inc" TextWrapping="Wrap" FontFamily="{DynamicResource Font_Base}" FontWeight="Bold" FontSize="10" VerticalAlignment="Center" Foreground="Black" Margin="5,5,1,5"/>
+
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,5,0" >
+                            <Button x:Name="btnMinimize" Margin="0,0,6,0" Style="{DynamicResource Button_WindowControl}">
+                                <Image Source="Images/Icons/icoMinimize.png" Stretch="None"/>
+                            </Button>
+                            <Button x:Name="btnMaximize" Margin="0,0,6,0" Style="{DynamicResource Button_WindowControl}">
+                                <Image Source="Images/Icons/icoMaximize.png" Stretch="None"/>
+                            </Button>
+                            <Button x:Name="btnClose" Command="ApplicationCommands.Close" Style="{DynamicResource Button_WindowControl}">
+                                <Image Source="Images/Icons/icoClose.png" Stretch="None"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10*"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0" LastChildFill="False" HorizontalAlignment="Stretch" Width="Auto" Background="#FFF2F2F2">
+                    <ToolBar x:Name="tbToolBar" DockPanel.Dock="Left"
+               Background="{x:Null}">
+
+                        <!--<Button ToolTip="New">
+                    <Image Width="30" Stretch="Uniform" Source="Images/edit.png"/>
+                </Button>-->
+
+                        <StackPanel Orientation="Vertical" Margin="2">
+                            <TextBlock HorizontalAlignment="Center">Fill Colour:</TextBlock>
+
+                            <ComboBox HorizontalAlignment="Center" x:Name="fillColour" Width="150" ItemTemplate="{StaticResource SolidColorTemplate}" SelectedIndex="0">
+                                <SolidColorBrush Color="Transparent"/>
+                                <SolidColorBrush Color="Black"/>
+                                <SolidColorBrush Color="Red"/>
+                                <SolidColorBrush Color="Green"/>
+                                <SolidColorBrush Color="Blue"/>
+                                <SolidColorBrush Color="Cyan"/>
+                                <SolidColorBrush Color="Magenta"/>
+                                <SolidColorBrush Color="Yellow"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="2">
+                            <TextBlock HorizontalAlignment="Center">Line Colour:</TextBlock>
+
+                            <ComboBox HorizontalAlignment="Center" x:Name="lineColour" Width="150" ItemTemplate="{StaticResource SolidColorTemplate}" SelectedIndex="0">
+                                <SolidColorBrush Color="Black"/>
+                                <SolidColorBrush Color="Red"/>
+                                <SolidColorBrush Color="Green"/>
+                                <SolidColorBrush Color="Blue"/>
+                                <SolidColorBrush Color="Cyan"/>
+                                <SolidColorBrush Color="Magenta"/>
+                                <SolidColorBrush Color="Yellow"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="2">
+                            <TextBlock HorizontalAlignment="Center">Line Width:</TextBlock>
+
+                            <ComboBox HorizontalAlignment="Center" x:Name="lineWidth" Width="150" SelectedIndex="1">
+                                <ComboBoxItem>1</ComboBoxItem>
+                                <ComboBoxItem>2</ComboBoxItem>
+                                <ComboBoxItem>4</ComboBoxItem>
+                                <ComboBoxItem>8</ComboBoxItem>
+                                <ComboBoxItem>10</ComboBoxItem>
+                                <ComboBoxItem>12</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <Button ToolTip="Undo" Command="pc:Commands.Undo">
+                            <Image Width="30" Stretch="Uniform" Source="Images/undo.png"/>
+                        </Button>
+                        
+                        <Button ToolTip="Save" Command="pc:Commands.SaveImage">
+                            <Image Width="30" Stretch="Uniform" Source="Images/save.png"/>
+                        </Button>
+
+                        <Button ToolTip="Exit" Command="pc:Commands.HideImage">
+                            <Image Width="30" Stretch="Uniform" Source="Images/exit.png"/>
+                        </Button>
+
+                    </ToolBar>
+                </DockPanel>
+
+                <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    
+                        <Canvas x:Name="drawingCanvas" MouseMove="drawingCanvas_MouseMove" MouseLeftButtonUp="drawingCanvas_MouseUp" MouseLeftButtonDown="drawingCanvas_MouseDown" ClipToBounds="False">
+                            <Canvas.Background>
+                                <ImageBrush x:Name="fullSizeImage"/>
+                            </Canvas.Background>
+                        </Canvas>
+                 
+                </ScrollViewer>
+            </Grid>
+
+        </Grid>
+    </Border>
+</Window>
