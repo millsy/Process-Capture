@@ -28,7 +28,7 @@ namespace ProcessCapture
                 //Start Word and create a new document.
                 Word._Application oWord = new Word.Application();
                 Word._Document oDoc;
-                object visible = true;
+                object visible = false;
 
                 oDoc = oWord.Documents.Add(ref template, ref oMissing, ref oMissing, ref visible);
 
