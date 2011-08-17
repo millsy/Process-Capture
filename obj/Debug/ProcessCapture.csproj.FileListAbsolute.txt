@@ -165,4 +165,3 @@ Z:\chris\GithubProjects\Process-Capture\obj\Debug\ProcessCapture.g.resources
 Z:\chris\GithubProjects\Process-Capture\obj\Debug\ProcessCapture.PDF.PDFForm.resources
 Z:\chris\GithubProjects\Process-Capture\obj\Debug\ProcessCapture.Properties.Resources.resources
 Z:\chris\GithubProjects\Process-Capture\obj\Debug\ProcessCapture.csproj.GenerateResource.Cache
-Z:\chris\GithubProjects\Process-Capture\bin\Debug\Microsoft.Office.Interop.Word.dll

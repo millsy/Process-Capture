@@ -52,7 +52,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Word, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
-      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Program Files\Microsoft Visual Studio 10.0\Visual Studio Tools for Office\PIA\Office12\Microsoft.Office.Interop.Word.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Luna">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
