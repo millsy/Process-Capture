@@ -109,7 +109,7 @@ namespace ProcessCapture.TabControls
 
         private void CloseProject()
         {
-            ProjectObject = null;
+            ProjectObject = new Project();
             OpenSpanWPFWindow window = (OpenSpanWPFWindow)Application.Current.MainWindow;
             window.screenCapture._screenImages.Clear();
 
@@ -119,6 +119,11 @@ namespace ProcessCapture.TabControls
 
         public bool CanSave()
         {
+            if (ProjectObject == null)
+            {
+                ProjectObject = new Project();
+            }
+
             if (ProjectObject.ProjectFileLocation != null && ProjectObject.ProjectFileLocation != string.Empty)
             {
                 return true;
