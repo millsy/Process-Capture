@@ -75,6 +75,17 @@ namespace ProcessCapture.MonitorActivate
             }
         }
 
+        private string StripQueryString(string url)
+        {
+            if (url != null && url.Length > 0 && url.IndexOf("?") > -1)
+            {
+                //there is a query string
+                return url.Substring(0, url.IndexOf("?"));
+            }
+
+            return url;
+        }
+
         public string GetURL(int hwnd)
         {
             ShellWindows sw = new ShellWindows();
@@ -95,12 +106,12 @@ namespace ProcessCapture.MonitorActivate
                             if (IsWindowVisible(hw))
                             {
                                 string activeTabUrl = ((windows.Current as IWebBrowser2).Document as mshtml.IHTMLDocument2).url;
-                                return activeTabUrl;
+                                return StripQueryString(activeTabUrl);
                             }
                         }
                         else
                         {
-                            return (windows.Current as IWebBrowser2).LocationURL;
+                            return StripQueryString((windows.Current as IWebBrowser2).LocationURL);
                         }
                     }
                 }
