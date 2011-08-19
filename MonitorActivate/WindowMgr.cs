@@ -13,7 +13,7 @@ namespace ProcessCapture.MonitorActivate
     {
         public WindowMgr()
         {
-            callBackPtr = new CallBackPtr(Report);  
+            callBackPtr = new CallBackPtr(Report);
         }
 
         public delegate bool CallBackPtr(int hwnd, int lParam);
@@ -53,7 +53,7 @@ namespace ProcessCapture.MonitorActivate
 
                 _oswindows.Add(oswindow);
             }
-            
+
             return true;
         }
 
@@ -89,15 +89,18 @@ namespace ProcessCapture.MonitorActivate
         public string GetURL(int hwnd)
         {
             ShellWindows sw = new ShellWindows();
-            
+
             IEnumerator windows = new ShellWindowsClass().GetEnumerator();
             while (windows.MoveNext())
             {
-                if ((windows.Current as IWebBrowser2).HWND == hwnd)
+                //if ((windows.Current.GetType() == typeof(IWebBrowser2)))
+                //{
+                IWebBrowser2 browser = (windows.Current as IWebBrowser2);
+                if (browser != null && browser.HWND == hwnd)
                 {
                     if ((windows.Current is IWebBrowser2))
                     {
-                        IntPtr hw; 
+                        IntPtr hw;
                         IOleWindow win = ((windows.Current as IWebBrowser2).Document as IOleWindow);
                         if (win != null)
                         {
@@ -115,6 +118,7 @@ namespace ProcessCapture.MonitorActivate
                         }
                     }
                 }
+                //}
             }
 
             return "n/a";
@@ -123,7 +127,7 @@ namespace ProcessCapture.MonitorActivate
 
     [ComImport]
     [Guid("00000114-0000-0000-C000-000000000046")]
-    [InterfaceType (ComInterfaceType.InterfaceIsIUnknown)]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IOleWindow
     {
         /// <summary>
@@ -131,7 +135,7 @@ namespace ProcessCapture.MonitorActivate
         /// (frame, document, parent, or in-place object window).
         /// </summary>
         /// <param name="phwnd">Pointer to where to return the window handle.</param>
-        void GetWindow (out IntPtr phwnd) ;
+        void GetWindow(out IntPtr phwnd);
 
         /// <summary>
         /// Determines whether context-sensitive help mode should be entered during an 
@@ -139,7 +143,7 @@ namespace ProcessCapture.MonitorActivate
         /// </summary>
         /// <param name="fEnterMode"><c>true</c> if help mode should be entered; 
         /// <c>false</c> if it should be exited.</param>
-        void ContextSensitiveHelp ([In, MarshalAs(UnmanagedType.Bool)] bool fEnterMode) ;
+        void ContextSensitiveHelp([In, MarshalAs(UnmanagedType.Bool)] bool fEnterMode);
     }
 
     public class OSWindow

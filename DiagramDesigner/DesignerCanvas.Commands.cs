@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Xml;
 using System.Xml.Linq;
 using Microsoft.Win32;
+using ProcessCapture.Log;
 
 namespace DiagramDesigner
 {
@@ -761,7 +762,8 @@ namespace DiagramDesigner
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.StackTrace, e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    string file = Logger.GetInstance().Log(e);
+                    MessageBox.Show("An error has occurred - it has been saved to " + file + " - please email this to millsy@openspan.com");
                 }
             }
 
@@ -780,7 +782,8 @@ namespace DiagramDesigner
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.StackTrace, ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    string file = Logger.GetInstance().Log(ex);
+                    MessageBox.Show("An error has occurred - it has been saved to " + file + " - please email this to millsy@openspan.com");
                 }
             }
         }
@@ -799,7 +802,8 @@ namespace DiagramDesigner
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.StackTrace, e.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    string file = Logger.GetInstance().Log(e);
+                    MessageBox.Show("An error has occurred - it has been saved to " + file + " - please email this to millsy@openspan.com");
                 }
             }
 

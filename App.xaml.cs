@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading;
 using System.Web;
 using System.Collections.Specialized;
+using ProcessCapture.Log;
 
 
 namespace OpenSpanWPF
@@ -27,9 +28,8 @@ namespace OpenSpanWPF
         {
             try
             {
-                string tempPath = System.IO.Path.GetTempPath();
-                System.IO.File.WriteAllText(tempPath + "millsy.txt", e.Exception.Message + Environment.NewLine + Environment.NewLine + e.Exception.StackTrace + Environment.NewLine + Environment.NewLine + (e.Exception.InnerException != null ? e.Exception.InnerException.StackTrace : "No inner exception"));
-                MessageBox.Show("An error has occurred - it has been saved to "+tempPath+"millsy.txt - please email this to millsy@openspan.com");
+                string file = Logger.GetInstance().Log(e.Exception);
+                MessageBox.Show("An error has occurred - it has been saved to " + file + " - please email this to millsy@openspan.com");
             }
             catch(Exception ex)
             {

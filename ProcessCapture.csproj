@@ -211,6 +211,7 @@
     <Compile Include="ImageEditingWindow.xaml.cs">
       <DependentUpon>ImageEditingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Log\Logger.cs" />
     <Compile Include="MonitorActivate\ScreenCapture.cs" />
     <Compile Include="MonitorActivate\MonitorActivate.cs" />
     <Compile Include="MonitorActivate\WindowMgr.cs" />

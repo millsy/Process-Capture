@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Xml;
 using ProcessCapture.Screenshot;
+using ProcessCapture.Log;
 
 namespace ProcessCapture
 {
@@ -176,7 +177,9 @@ namespace ProcessCapture
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                string file = Logger.GetInstance().Log(e);
+                MessageBox.Show("An error has occurred - it has been saved to " + file + " - please email this to millsy@openspan.com");
+
                 return null;
             }
         }

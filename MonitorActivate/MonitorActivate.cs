@@ -9,6 +9,7 @@ using System.Drawing.Imaging;
 using System.Threading;
 using System.Windows.Interop;
 using System.Diagnostics;
+using ProcessCapture.Log;
 
 namespace ProcessCapture.MonitorActivate
 {
@@ -130,7 +131,8 @@ namespace ProcessCapture.MonitorActivate
             }
             catch (Exception err)
             {
-                Console.WriteLine(err.Message);
+                string file = Logger.GetInstance().Log(err);
+                MessageBox.Show("An error has occurred - it has been saved to " + file + " - please email this to millsy@openspan.com");
             }
         }
 
@@ -151,6 +153,8 @@ namespace ProcessCapture.MonitorActivate
             catch (Exception err)
             {
                 //report error
+                string file = Logger.GetInstance().Log(err);
+                MessageBox.Show("An error has occurred - it has been saved to " + file + " - please email this to millsy@openspan.com");
             }
         }
 

@@ -16,6 +16,7 @@ using ProcessCapture.PDF;
 using ProcessCapture.Screenshot;
 using Microsoft.Win32;
 using System.Diagnostics;
+using ProcessCapture.Log;
 
 namespace ProcessCapture.TabControls
 {
@@ -107,8 +108,8 @@ namespace ProcessCapture.TabControls
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
-                System.IO.File.WriteAllText("C:\\error.log", ex.ToString());
+                string file = Logger.GetInstance().Log(ex);
+                MessageBox.Show("An error has occurred - it has been saved to " + file + " - please email this to millsy@openspan.com");
             }
         }
 
