@@ -7,6 +7,8 @@ using System.Xml;
 using ProcessCapture.Screenshot;
 using ProcessCapture.Log;
 using System.IO;
+using OpenSpanWPF;
+using Ionic.Zip;
 
 namespace ProcessCapture
 {
@@ -199,6 +201,31 @@ namespace ProcessCapture
                 MessageBox.Show("An error has occurred - it has been saved to " + file + " - please email this to millsy@openspan.com");
 
                 return null;
+            }
+        }
+
+        public static bool ExportToZip(Project proj, string zipfile)
+        {
+            try
+            {
+                using (ZipFile zip = new ZipFile(zipfile))
+                {
+                    zip.AddFile(proj.ProjectFileLocation, "");
+
+                    OpenSpanWPFWindow window = (OpenSpanWPFWindow)Application.Current.MainWindow;
+                    foreach (ScreenImage si in window.screenCapture._screenImages)
+                    {
+                        zip.AddFile(si.Filename, "images");
+                    }
+
+                    zip.Save();
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
     }

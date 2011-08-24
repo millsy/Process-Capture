@@ -49,6 +49,7 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Margin="5" Click="btnOpenProject_Click"  x:Name="btnOpenProject" Style="{DynamicResource Button_RectangleDropShadow}" VerticalAlignment="Center">
@@ -57,7 +58,10 @@
             <Button Grid.Column="1" Margin="5" Click="btnSaveProject_Click" x:Name="btnSaveProject" Style="{DynamicResource Button_RectangleDropShadow}" VerticalAlignment="Center">
                 <TextBlock Text="Save Project" TextWrapping="Wrap" FontFamily="{DynamicResource Font_Base}" FontSize="13" FontWeight="Normal" Foreground="{DynamicResource Brush_TextDarkGrey}" Margin="12,0"/>
             </Button>
-            <Button Grid.Column="2" Margin="5" Click="btnCloseProject_Click" x:Name="btnCloseProject" Style="{DynamicResource Button_RectangleDropShadow}" VerticalAlignment="Center">
+            <Button Grid.Column="2" Margin="5" Click="btnExportProject_Click" x:Name="btnExportProject" Style="{DynamicResource Button_RectangleDropShadow}" VerticalAlignment="Center">
+                <TextBlock Text="Export Project" TextWrapping="Wrap" FontFamily="{DynamicResource Font_Base}" FontSize="13" FontWeight="Normal" Foreground="{DynamicResource Brush_TextDarkGrey}" Margin="12,0"/>
+            </Button>
+            <Button Grid.Column="3" Margin="5" Click="btnCloseProject_Click" x:Name="btnCloseProject" Style="{DynamicResource Button_RectangleDropShadow}" VerticalAlignment="Center">
                 <TextBlock Text="Close Project" TextWrapping="Wrap" FontFamily="{DynamicResource Font_Base}" FontSize="13" FontWeight="Normal" Foreground="{DynamicResource Brush_TextDarkGrey}" Margin="12,0"/>
             </Button>
         </Grid>

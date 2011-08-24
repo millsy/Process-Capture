@@ -186,5 +186,29 @@ namespace ProcessCapture.TabControls
         {
             ProjectObject.RequestSave();
         }
+
+        private void btnExportProject_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProjectObject != null && CanSave())
+            {
+                if (ProjectObject.SaveRequired && MessageBox.Show("Do you wish to save your project?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    Save();
+                }
+
+                Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+                dialog.DefaultExt = "zip";
+                dialog.FileName = "ProcessCaptureExport.zip";
+                dialog.CheckPathExists = true;
+                dialog.AddExtension = true;
+                dialog.Filter = "ZIP Files|*.zip";
+                bool? result = dialog.ShowDialog(Application.Current.MainWindow);
+                if (result.HasValue && result.Value)
+                {
+                    //now export the file
+                    Project.ExportToZip(ProjectObject, dialog.FileName);
+                }
+            }
+        }
     }
 }
