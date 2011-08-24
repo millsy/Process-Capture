@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ProcessCapture.Screenshot;
+using OpenSpanWPF;
 
 namespace ProcessCapture
 {
@@ -60,7 +61,27 @@ namespace ProcessCapture
             {
                 pointEnd = new Point(e.GetPosition(drawingCanvas).X, e.GetPosition(drawingCanvas).Y);
 
-                DrawRect(pointEnd);
+                if (btnRect.IsChecked == true)
+                {
+                    DrawRect(pointEnd);
+                }
+                else if (btnLine.IsChecked == true || btnArrow.IsChecked == true)
+                {
+                    DrawLine(pointEnd);
+                }
+                else if (btnText.IsChecked == true)
+                {
+                    mouseMoveText.SetValue(Canvas.LeftProperty, pointEnd.X);
+                    mouseMoveText.SetValue(Canvas.TopProperty, pointEnd.Y);
+                }
+                else if (btnPointer.IsChecked == true && moveableObject != null)
+                {
+                    if (moveableObject.GetType() == typeof(TextBlock))
+                    {
+                        (moveableObject as TextBlock).SetValue(Canvas.LeftProperty, pointEnd.X);
+                        (moveableObject as TextBlock).SetValue(Canvas.TopProperty, pointEnd.Y);
+                    }
+                }
             }
         }
 
@@ -70,27 +91,83 @@ namespace ProcessCapture
 
             pointEnd = new Point(e.GetPosition(drawingCanvas).X, e.GetPosition(drawingCanvas).Y);
 
-            mouseMoveRec.StrokeDashArray = null;
-
-            DrawRect(pointEnd);
-
-            shapes.Add(mouseMoveRec);
+            if (btnText.IsChecked == true)
+            {
+                mouseMoveText.SetValue(Canvas.LeftProperty, pointEnd.X);
+                mouseMoveText.SetValue(Canvas.TopProperty, pointEnd.Y);
+            }
+            else if (btnRect.IsChecked == true)
+            {
+                mouseMoveRec.StrokeDashArray = null;
+                DrawRect(pointEnd);
+                shapes.Add(mouseMoveRec);
+            }
+            else if(btnArrow.IsChecked == true || btnLine.IsChecked == true)
+            {
+                mouseMoveLine.StrokeDashArray = null;
+                DrawLine(pointEnd);
+                shapes.Add(mouseMoveLine);
+            }
+            else if (btnPointer.IsChecked == true && moveableObject != null)
+            {
+                if (moveableObject.GetType() == typeof(TextBlock))
+                {
+                    (moveableObject as TextBlock).SetValue(Canvas.LeftProperty, pointEnd.X);
+                    (moveableObject as TextBlock).SetValue(Canvas.TopProperty, pointEnd.Y);
+                }
+                moveableObject = null;
+            }
         }
 
         private void drawingCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             IsMouseDown = true;
-
+            
             pointStart = new Point(e.GetPosition(drawingCanvas).X, e.GetPosition(drawingCanvas).Y);
 
-            mouseMoveRec = new Rectangle();
+            if (btnRect.IsChecked == true)
+            {
+                mouseMoveRec = new Rectangle();
+                mouseMoveRec.Stroke = (SolidColorBrush)lineColour.SelectedItem;
+                mouseMoveRec.StrokeThickness = Int32.Parse(lineWidth.Text);
+                mouseMoveRec.Fill = (SolidColorBrush)fillColour.SelectedItem;
+                mouseMoveRec.StrokeDashArray = new DoubleCollection(new double[] { 1 });
+                drawingCanvas.Children.Add(mouseMoveRec);
+            }
+            else if (btnText.IsChecked == true)
+            {
+                mouseMoveText = new TextBlock();
+                mouseMoveText.Text = "Sample Text";
+                mouseMoveText.Foreground = (SolidColorBrush)lineColour.SelectedItem;
+                drawingCanvas.Children.Add(mouseMoveText);
+            }
+            else if (btnArrow.IsChecked == true || btnLine.IsChecked == true)
+            {
+                mouseMoveLine = new Arrow();
+                mouseMoveLine.Stroke = (SolidColorBrush)lineColour.SelectedItem;
+                mouseMoveLine.StrokeThickness = Int32.Parse(lineWidth.Text);
+                mouseMoveLine.StrokeDashArray = new DoubleCollection(new double[] { 1 });
 
-            mouseMoveRec.Stroke = (SolidColorBrush)lineColour.SelectedItem;
-            mouseMoveRec.StrokeThickness = Int32.Parse(lineWidth.Text);
-            mouseMoveRec.Fill = (SolidColorBrush)fillColour.SelectedItem;
-            mouseMoveRec.StrokeDashArray = new DoubleCollection(new double[] {1});
-            drawingCanvas.Children.Add(mouseMoveRec);
+                if (btnArrow.IsChecked == true)
+                {
+                    mouseMoveLine.HeadWidth = Int32.Parse(lineWidth.Text) * 3;
+                    mouseMoveLine.HeadHeight = Int32.Parse(lineWidth.Text) * 3;
+                }
 
+                drawingCanvas.Children.Add(mouseMoveLine);
+            }
+            else if (btnPointer.IsChecked == true)
+            {
+                moveableObject = e.OriginalSource;
+            }
+        }
+
+        private void DrawLine(Point pointEnd)
+        {
+            mouseMoveLine.X1 = pointStart.X;
+            mouseMoveLine.Y1 = pointStart.Y;
+            mouseMoveLine.X2 = pointEnd.X;
+            mouseMoveLine.Y2 = pointEnd.Y;
         }
 
         private void DrawRect(Point pointEnd)
@@ -129,12 +206,15 @@ namespace ProcessCapture
             mouseMoveRec.Width = Math.Abs(_width);
             mouseMoveRec.Height = Math.Abs(_height);
         }
-        
+
+        object moveableObject;
         Point pointStart;
         Point pointEnd;
         bool IsMouseDown;
 
+        TextBlock mouseMoveText = new TextBlock();
         Rectangle mouseMoveRec = new Rectangle();
+        Arrow mouseMoveLine = new Arrow();
         #endregion
 
         #region Commands
@@ -153,6 +233,8 @@ namespace ProcessCapture
         private void saveImage_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             ScreenImage.Save(drawingCanvas);
+
+            (Application.Current.MainWindow as OpenSpanWPFWindow).processInfo.ProjectObject.RequestSave();
         }
 
         private void hideImage_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -218,6 +300,7 @@ namespace ProcessCapture
 
         #endregion
 
+        
         
     }
 }

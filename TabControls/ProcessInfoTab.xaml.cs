@@ -56,6 +56,7 @@ namespace ProcessCapture.TabControls
                 fileLocation.Text = dialog.FileName;
                 ProjectObject.ProcessImage = dialog.FileName;
                 processDiagram.Source = new BitmapImage(new Uri(dialog.FileName));
+                ProjectObject.RequestSave();
             }
         }
 
@@ -73,6 +74,14 @@ namespace ProcessCapture.TabControls
 
         private void btnOpenProject_Click(object sender, RoutedEventArgs e)
         {
+            if (CanSave() && ProjectObject.SaveRequired)
+            {
+                if (MessageBox.Show("Do you wish to save your project?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    Save();
+                }
+            }
+
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Filter = "XML File|*.xml";
             dialog.FileName = "project.xml";
@@ -86,7 +95,7 @@ namespace ProcessCapture.TabControls
 
                 List<ScreenImage> images;
 
-                Project p = Project.FromXML(contents, out images);
+                Project p = Project.FromXML(projectFilename, contents, out images);
 
                 if (p != null)
                 {
@@ -103,6 +112,8 @@ namespace ProcessCapture.TabControls
 
                     window.screenCapture.IsEnabled = true;
                     window.outputInfo.IsEnabled = true;
+
+                    ProjectObject.SaveRequired = false;
                 }
             }
         }
@@ -115,6 +126,7 @@ namespace ProcessCapture.TabControls
 
             window.screenCapture.IsEnabled = false;
             window.outputInfo.IsEnabled = false;
+            ProjectObject.SaveRequired = false;
         }
 
         public bool CanSave()
@@ -162,12 +174,17 @@ namespace ProcessCapture.TabControls
 
         private void btnCloseProject_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Do you wish to save your project?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (ProjectObject != null && ProjectObject.SaveRequired && MessageBox.Show("Do you wish to save your project?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Save();
             }
 
             CloseProject();
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ProjectObject.RequestSave();
         }
     }
 }

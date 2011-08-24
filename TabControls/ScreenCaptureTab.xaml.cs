@@ -20,6 +20,7 @@ using System.Drawing.Imaging;
 using System.Drawing;
 using ProcessCapture.MonitorActivate;
 using System.IO;
+using OpenSpanWPF;
 
 namespace ProcessCapture.TabControls
 {
@@ -37,6 +38,14 @@ namespace ProcessCapture.TabControls
             monActivate = new ProcessCapture.MonitorActivate.MonitorActivate(new CallbackHandler(CaptureScreen));
 
             plw = new ProcessLayoutWindow(this);
+
+            _screenImages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(_screenImages_CollectionChanged);
+        }
+
+        private void _screenImages_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            (Application.Current.MainWindow as OpenSpanWPFWindow).processInfo.ProjectObject.RequestSave();
+            screenShots.Items.Refresh();
         }
 
         private ProcessLayoutWindow plw;
@@ -110,6 +119,8 @@ namespace ProcessCapture.TabControls
             string filename = Commands.GetFileName();
             screenCapture.CaptureWindowToFile(filename, ImageFormat.Png);
 
+            MonitorActivate.MonitorActivate.SetWindowFocus();
+
             ScreenImage si = new ScreenImage(filename);
             si.Title = MonitorActivate.MonitorActivate.GetWindowText();
             si.Path = MonitorActivate.MonitorActivate.GetProcessPath();
@@ -121,17 +132,36 @@ namespace ProcessCapture.TabControls
 
         public void CaptureWindow(IntPtr hwnd)
         {
-                string filename = Commands.GetFileName();
-                screenCapture.CaptureWindowToFile(hwnd, filename, ImageFormat.Png);
+            string filename = Commands.GetFileName();
+            screenCapture.CaptureWindowToFile(hwnd, filename, ImageFormat.Png);
 
-                ScreenImage si = new ScreenImage(filename);
-                si.Title = MonitorActivate.MonitorActivate.GetWindowText(hwnd);
-                si.Path = MonitorActivate.MonitorActivate.GetProcessPath(hwnd);
-                si.Modules = MonitorActivate.MonitorActivate.GetProcessModules(hwnd);
-                si.ApplicationURL = wm.GetURL(hwnd.ToInt32());
+            //Thread.Sleep(TIMEOUT);
 
-                _screenImages.Add(si);        
+            MonitorActivate.MonitorActivate.SetWindowFocus();
 
+            if (screenShots.SelectedIndex > -1 && screenShots.SelectedItem != null)
+            {
+                MessageBoxResult result = MessageBox.Show("Replace selected image?", "", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    ScreenImage osi = screenShots.SelectedItem as ScreenImage;
+                    int oldIndex = _screenImages.IndexOf(osi);
+                    ScreenImage newImage = new ScreenImage(osi, filename);
+                    DeleteImage(osi);
+                    newImage.Path = MonitorActivate.MonitorActivate.GetProcessPath(hwnd);
+                    newImage.Modules = MonitorActivate.MonitorActivate.GetProcessModules(hwnd);
+                    newImage.ApplicationURL = wm.GetURL(hwnd.ToInt32());
+                    _screenImages.Insert(oldIndex, newImage);
+                    return;
+                }
+            }
+            ScreenImage si = new ScreenImage(filename);
+            si.Title = MonitorActivate.MonitorActivate.GetWindowText(hwnd);
+            si.Path = MonitorActivate.MonitorActivate.GetProcessPath(hwnd);
+            si.Modules = MonitorActivate.MonitorActivate.GetProcessModules(hwnd);
+            si.ApplicationURL = wm.GetURL(hwnd.ToInt32());
+            
+            _screenImages.Add(si);        
         }
 
         public void CaptureDesktop()
@@ -143,11 +173,41 @@ namespace ProcessCapture.TabControls
             string filename = Commands.GetFileName();
             screenCapture.CaptureScreenToFile(filename, ImageFormat.Png);
 
-            ScreenImage si = new ScreenImage(filename);
-            si.Title = "Desktop Screenshot";
-            _screenImages.Add(si);
+            Application.Current.MainWindow.Show();
+            
+            MonitorActivate.MonitorActivate.SetWindowFocus();
+
+            if (screenShots.SelectedIndex > -1 && screenShots.SelectedItem != null)
+            {
+                //MessageBoxResult result = ;
+                if (MessageBox.Show("Replace selected image?", "", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                {
+                    ScreenImage si = screenShots.SelectedItem as ScreenImage;
+                    int oldIndex = _screenImages.IndexOf(si);
+                    ScreenImage newImage = new ScreenImage(si, filename);
+                    DeleteImage(si);
+                    _screenImages.Insert(oldIndex, newImage);
+                }
+                else
+                {
+                    AddScreenShot(filename, "Desktop Screenshot");
+                }
+            }
+            else
+            {
+                AddScreenShot(filename, "Desktop Screenshot");
+            }
 
             Application.Current.MainWindow.Show();
+        }
+
+        private void AddScreenShot(string filename, string title)
+        {
+            ScreenImage si = new ScreenImage(filename);
+            si.Title = title;
+            si.Path = "n/a";
+            si.ApplicationURL = "n/a";
+            _screenImages.Add(si);
         }
 
         ProcessCapture.MonitorActivate.ScreenCapture screenCapture = new ProcessCapture.MonitorActivate.ScreenCapture();
@@ -162,15 +222,23 @@ namespace ProcessCapture.TabControls
         {
             ScreenImage sc = e.Parameter as ScreenImage;
 
+            DeleteImage(sc);
+
+            e.Handled = true;
+        }
+
+        private void DeleteImage(ScreenImage sc)
+        {
             _screenImages.Remove(sc);
-            sc.Bitmap.Dispose();
+            if (sc != null && sc.Bitmap != null)
+            {
+                sc.Bitmap.Dispose();
+            }
 
             if (File.Exists(sc.Filename))
             {
                 File.Delete(sc.Filename);
             }
-
-            e.Handled = true;
         }
 
         private void ShowImage_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -223,8 +291,6 @@ namespace ProcessCapture.TabControls
             CaptureWindow(win);
 
             //Application.Current.MainWindow.Focus();
-
-            MonitorActivate.MonitorActivate.SetWindowFocus();
         }
 
         private void btnProcessLayout_Click(object sender, RoutedEventArgs e)
@@ -233,7 +299,25 @@ namespace ProcessCapture.TabControls
             plw.ShowDialog();
         }
 
-        
-        
+        private void btnMoveDown_Click(object sender, RoutedEventArgs e)
+        {
+            ScreenImage img = ((ListBoxItem)screenShots.ContainerFromElement((Button)sender)).Content as ScreenImage;
+            int currentIndex = _screenImages.IndexOf(img);
+            int newIndex = currentIndex + 1;
+            _screenImages.Move(currentIndex, newIndex);
+        }
+
+        private void btnMoveUp_Click(object sender, RoutedEventArgs e)
+        {
+            ScreenImage img = ((ListBoxItem)screenShots.ContainerFromElement((Button)sender)).Content as ScreenImage;
+            int currentIndex = _screenImages.IndexOf(img);
+            int newIndex = currentIndex - 1;
+            _screenImages.Move(currentIndex, newIndex);
+        }
+
+        private void txtTitle_KeyDown(object sender, KeyEventArgs e)
+        {
+            (Application.Current.MainWindow as OpenSpanWPFWindow).processInfo.ProjectObject.RequestSave();
+        }
     }
 }

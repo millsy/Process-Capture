@@ -17,13 +17,13 @@
         </Grid.RowDefinitions>
         
         <TextBlock Grid.Row="0" Grid.Column="0"  Margin="5" Style="{DynamicResource GeneralText}">Process Name:</TextBlock>
-        <TextBox TabIndex="0" MaxLines="1" MaxLength="30" HorizontalContentAlignment="Left" FontSize="13" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource TextBox_Singleline}" TextWrapping="Wrap" AcceptsReturn="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Grid.Row="0" Grid.Column="1"  Text="{Binding ProcessName}"/>
+        <TextBox TextChanged="TextBox_TextChanged" TabIndex="0" MaxLines="1" MaxLength="30" HorizontalContentAlignment="Left" FontSize="13" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource TextBox_Singleline}" TextWrapping="Wrap" AcceptsReturn="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Grid.Row="0" Grid.Column="1"  Text="{Binding ProcessName}"/>
         
         <TextBlock Grid.Row="1" Grid.Column="0"  Margin="5" Style="{DynamicResource GeneralText}">Description:</TextBlock>
-        <TextBox TabIndex="1" HorizontalContentAlignment="Left" VerticalAlignment="Center" FontSize="13" Style="{DynamicResource TextBox_Singleline}" TextWrapping="Wrap" Height="200" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Grid.Column="1"  Text="{Binding Description}"/>
+        <TextBox TextChanged="TextBox_TextChanged" TabIndex="1" HorizontalContentAlignment="Left" VerticalAlignment="Center" FontSize="13" Style="{DynamicResource TextBox_Singleline}" TextWrapping="Wrap" Height="200" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Grid.Column="1"  Text="{Binding Description}"/>
         
         <TextBlock Grid.Row="2" Grid.Column="0"  Margin="5" Style="{DynamicResource GeneralText}">Author:</TextBlock>
-        <TextBox TabIndex="2" MaxLines="1" MaxLength="30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" FontSize="13" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource TextBox_Singleline}" TextWrapping="Wrap" AcceptsReturn="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Grid.Row="2" Grid.Column="1"  Text="{Binding Author}"/>
+        <TextBox TextChanged="TextBox_TextChanged" TabIndex="2" MaxLines="1" MaxLength="30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" FontSize="13" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource TextBox_Singleline}" TextWrapping="Wrap" AcceptsReturn="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Grid.Row="2" Grid.Column="1"  Text="{Binding Author}"/>
         
         <TextBlock Grid.Row="3" Grid.Column="0"  Margin="5" Style="{DynamicResource GeneralText}">Process Diagram:</TextBlock>
         <Grid HorizontalAlignment="Stretch" Grid.Row="3" Grid.Column="1" >

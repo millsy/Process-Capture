@@ -47,7 +47,16 @@ namespace OpenSpanWPF
             //if (!hk.Register(System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle))
             //{
             //    MessageBox.Show("Failed to register hotkey");
-            //}           
+            //}    
+
+            if (SystemParameters.WorkArea.Height < this.Height)
+            {
+                this.Height = SystemParameters.WorkArea.Height;
+            }
+            if (SystemParameters.WorkArea.Width < this.Width)
+            {
+                this.Width = SystemParameters.WorkArea.Width;
+            }
         }
 
         void hk_Pressed(object sender, System.ComponentModel.HandledEventArgs e)
@@ -57,9 +66,12 @@ namespace OpenSpanWPF
 
         void OpenSpanWPFWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show("Do you wish to save your project?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (this.processInfo.ProjectObject.SaveRequired)
             {
-                this.processInfo.Save();
+                if (MessageBox.Show("Do you wish to save your project?", "", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    this.processInfo.Save();
+                }
             }
 
             screenCapture.Close();

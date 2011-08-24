@@ -1,8 +1,12 @@
 ﻿<TabItem x:Class="ProcessCapture.TabControls.ScreenCaptureTab"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:pc="clr-namespace:ProcessCapture"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:p="clr-namespace:OpenSpanWPF"  xmlns:pc="clr-namespace:ProcessCapture"
     DataContext="{Binding RelativeSource={RelativeSource Self}}">
-
+    <TabItem.Resources>
+        <p:IndexConverter x:Key="indexConvert"/>
+        <p:CanMoveDownConerter x:Key="downConvert"/>
+        <p:CanMoveUpConerter x:Key="upConvert"/>
+    </TabItem.Resources>
     <TabItem.CommandBindings>
         <CommandBinding Command="pc:Commands.DeleteRecord" CanExecute="DeleteRecord_CanExecute" Executed="DeleteRecord_Executed"/>
         <CommandBinding Command="pc:Commands.ShowImage" CanExecute="ShowImage_CanExecute" Executed="ShowImage_Executed"/>
@@ -27,13 +31,23 @@
 
                     <Grid Margin="5" MaxHeight="250">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="300"/>
                             <ColumnDefinition Width="4*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Margin="5" Height="200" Source="{Binding BitmapSource}"/>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <Button BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="20" Background="Transparent" x:Name="btnMoveUp" Click="btnMoveUp_Click" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="{Binding Path=.,Converter={StaticResource upConvert}}">
+                                <Image Source="/Images/up.png"></Image>
+                            </Button>
+                            <TextBlock  FontSize="14" FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Path=., Converter={StaticResource indexConvert} }" ></TextBlock>
+                            <Button BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Width="20" Background="Transparent" x:Name="btnMoveDown" Click="btnMoveDown_Click" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="{Binding Path=.,Converter={StaticResource downConvert}}">
+                                <Image Source="/Images/down.png"></Image>
+                            </Button>
+                        </StackPanel>
+                        <Image Grid.Column="1"  Margin="5" Height="200" Source="{Binding BitmapSource}"/>
 
-                        <Grid Grid.Column="1">
+                        <Grid Grid.Column="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="5*"/>
@@ -48,7 +62,7 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"  Margin="5" Style="{DynamicResource GeneralText}">Title:</TextBlock>
-                            <TextBox Margin="5" VerticalAlignment="Center" x:Name="txtTitle" MaxLines="1" MaxLength="30" HorizontalContentAlignment="Left" FontSize="13" VerticalContentAlignment="Center" Style="{DynamicResource TextBox_Singleline}" TextWrapping="Wrap" AcceptsReturn="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Grid.Row="0" Grid.Column="1"  Text="{Binding Title}"/>
+                            <TextBox KeyDown="txtTitle_KeyDown" Margin="5" VerticalAlignment="Center" x:Name="txtTitle" MaxLines="1" MaxLength="30" HorizontalContentAlignment="Left" FontSize="13" VerticalContentAlignment="Center" Style="{DynamicResource TextBox_Singleline}" TextWrapping="Wrap" AcceptsReturn="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Grid.Row="0" Grid.Column="1"  Text="{Binding Title}"/>
                             
                             <TextBlock VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"  Margin="5" Style="{DynamicResource GeneralText}">Path:</TextBlock>
                             <TextBox Margin="5" IsReadOnly="True" VerticalAlignment="Center" x:Name="txtPath" MaxLines="1" HorizontalContentAlignment="Left" FontSize="13" VerticalContentAlignment="Center" Style="{DynamicResource TextBox_Singleline}" TextWrapping="Wrap" AcceptsReturn="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Grid.Column="1"  Text="{Binding Path}"/>
@@ -60,7 +74,7 @@
                             <TextBox Margin="5" IsReadOnly="True" VerticalAlignment="Center" x:Name="txtURL" MaxLines="1" HorizontalContentAlignment="Left" FontSize="13" VerticalContentAlignment="Center" Style="{DynamicResource TextBox_Singleline}" TextWrapping="Wrap" AcceptsReturn="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Grid.Row="3" Grid.Column="1"  Text="{Binding ApplicationURL}"/>
                             
                             <TextBlock Grid.Row="4" Grid.Column="0"  Margin="5" Style="{DynamicResource GeneralText}" VerticalAlignment="Center">Notes:</TextBlock>
-                            <TextBox Margin="5" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Style="{DynamicResource TextBox_MultipleLines}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Grid.Row="4" Grid.Column="1"  Text="{Binding Notes}"/>
+                            <TextBox KeyDown="txtTitle_KeyDown" Margin="5" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Style="{DynamicResource TextBox_MultipleLines}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Grid.Row="4" Grid.Column="1"  Text="{Binding Notes}"/>
                             
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
                                 <Button Width="150" Command="pc:Commands.ShowImage" CommandParameter="{Binding}" Margin="5" x:Name="btnShowImage" Style="{DynamicResource Button_RectangleDropShadow}" VerticalAlignment="Center">
@@ -82,7 +96,7 @@
             <ListBox.Style>
                 <Style>
                     <Style.Resources>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Pink"/>
                         <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="White"/>
                     </Style.Resources>
                 </Style>

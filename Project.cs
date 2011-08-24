@@ -6,6 +6,7 @@ using System.Windows;
 using System.Xml;
 using ProcessCapture.Screenshot;
 using ProcessCapture.Log;
+using System.IO;
 
 namespace ProcessCapture
 {
@@ -18,6 +19,13 @@ namespace ProcessCapture
         private static DependencyProperty ProcessImageDO = DependencyProperty.Register("ProcessImage", typeof(string), typeof(Project));
 
         public string ProjectFileLocation;
+
+        public bool SaveRequired = false;
+
+        public void RequestSave()
+        {
+            SaveRequired = true;
+        }
 
         public string ProcessName
         {
@@ -95,7 +103,7 @@ namespace ProcessCapture
                 sb.Append("<screenshot>" + Environment.NewLine);
 
                 sb.Append("<location><![CDATA[");
-                sb.Append(si.Filename);
+                sb.Append("images\\" + Path.GetFileName(si.Filename));
                 sb.Append("]]></location>" + Environment.NewLine);
 
                 sb.Append("<url><![CDATA[");
@@ -133,7 +141,7 @@ namespace ProcessCapture
             return sb.ToString();
         }
 
-        public static Project FromXML(string xml, out List<ScreenImage> images)
+        public static Project FromXML(string filename, string xml, out List<ScreenImage> images)
         {
             images = new List<ScreenImage>();
 
@@ -141,6 +149,8 @@ namespace ProcessCapture
             {
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(xml);
+
+                string baseDir = Path.GetDirectoryName(filename);
 
                 Project newProject = new Project();
 
@@ -153,6 +163,14 @@ namespace ProcessCapture
                 foreach (XmlNode screenshot in screenshots)
                 {
                     string path = screenshot.SelectSingleNode("location").InnerText;
+
+                    if (!Path.IsPathRooted(path))
+                    {
+                        //relative path in XML
+                        //append Images directory
+                        path = baseDir + "\\" + path;
+                    }
+
                     ScreenImage si = new ScreenImage(path);
 
                     si.ApplicationURL = screenshot.SelectSingleNode("url") != null ? screenshot.SelectSingleNode("url").InnerText : "";

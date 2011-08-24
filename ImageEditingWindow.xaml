@@ -106,7 +106,22 @@
                                 <ComboBoxItem>12</ComboBoxItem>
                             </ComboBox>
                         </StackPanel>
-
+                        <RadioButton IsChecked="True" ToolTip="Pointer" x:Name="btnPointer" GroupName="drawingType">
+                            <Image Width="30" Stretch="Uniform" Source="Images/cursor.png"/>
+                        </RadioButton>
+                        <RadioButton IsChecked="False" ToolTip="Line" x:Name="btnLine" GroupName="drawingType">
+                            <Image Width="30" Stretch="Uniform" Source="Images/line.png"/>
+                        </RadioButton>
+                        <RadioButton IsChecked="False" ToolTip="Arrow" x:Name="btnArrow" GroupName="drawingType">
+                            <Image Width="30" Stretch="Uniform" Source="Images/line2.png"/>
+                        </RadioButton>
+                        <RadioButton IsChecked="False" ToolTip="Rectangle" x:Name="btnRect" GroupName="drawingType">
+                            <Image Width="30" Stretch="Uniform" Source="Images/rectangle.png"/>
+                        </RadioButton>
+                        <RadioButton IsChecked="False" ToolTip="Text" x:Name="btnText" GroupName="drawingType">
+                            <Image Width="30" Stretch="Uniform" Source="Images/text.png"/>
+                        </RadioButton>
+                        
                         <Button ToolTip="Undo" Command="pc:Commands.Undo">
                             <Image Width="30" Stretch="Uniform" Source="Images/undo.png"/>
                         </Button>

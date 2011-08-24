@@ -188,6 +188,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arrow.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="DateTimeConverter.cs" />
     <Compile Include="DiagramDesigner\Connection.cs" />
@@ -370,6 +371,25 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\OpenSpan.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\down.png" />
+    <Resource Include="Images\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\rectangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\line2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\text.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\cursor.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -63,6 +63,22 @@ namespace ProcessCapture.Screenshot
             _notes = "";
         }
 
+        public ScreenImage(ScreenImage si, string image)
+        {
+            if (image != null && File.Exists(image))
+            {
+                Bitmap = new Bitmap(image);
+            }
+
+            _filename = image;
+            _notes = si.Notes;
+            //_appURL = si.ApplicationURL;
+            //_modules = si.Modules;
+            //_path = si.Path;
+            _title = si.Title;
+            //_isProcessDiagram = si.IsProcessDiagram;
+        }
+
         public string Filename
         {
             get

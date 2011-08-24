@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using System.Globalization;
+using System.Collections.ObjectModel;
+using ProcessCapture.Screenshot;
 
 namespace OpenSpanWPF
 {
@@ -41,6 +43,62 @@ namespace OpenSpanWPF
             {
                 return DependencyProperty.UnsetValue;
             }
+        }
+    }
+
+    public class IndexConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            ObservableCollection<ScreenImage> coll = (Application.Current.MainWindow as OpenSpanWPFWindow).screenCapture._screenImages;
+            return coll.IndexOf(value as ScreenImage) + 1;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class CanMoveUpConerter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            ObservableCollection<ScreenImage> coll = (Application.Current.MainWindow as OpenSpanWPFWindow).screenCapture._screenImages;
+
+            if (coll.IndexOf(value as ScreenImage) == 0 || coll.Count == 1)
+            {
+                //first record
+                return false;// Visibility.Hidden;
+            }
+
+            return true;// Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class CanMoveDownConerter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            ObservableCollection<ScreenImage> coll = (Application.Current.MainWindow as OpenSpanWPFWindow).screenCapture._screenImages;
+
+            if ((coll.IndexOf(value as ScreenImage) == coll.Count - 1) || coll.Count == 1)
+            {
+                //last record
+                return false;// Visibility.Hidden;
+            }
+
+            return true;// Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }
