@@ -5,9 +5,9 @@
              x:Name="mainControl">
     <UserControl.Resources>
         <DataTemplate x:Key="EditModeTemplate">
-            <Border BorderBrush="Black" BorderThickness="1">
+            <Border BorderBrush="{Binding Path=TextBorder,ElementName=mainControl}" BorderThickness="1">
                 <TextBox KeyDown="TextBox_KeyDown" Loaded="TextBox_Loaded" LostFocus="TextBox_LostFocus"
-                     Margin="0" BorderThickness="1">
+                     Margin="0" BorderThickness="1" Foreground="{Binding Path=TextForeground,ElementName=mainControl}">
                     <TextBox.Text>
                         <Binding Path="Text" ElementName="mainControl" UpdateSourceTrigger="PropertyChanged"/>
                     </TextBox.Text>
@@ -16,8 +16,8 @@
         </DataTemplate>
 
         <DataTemplate x:Key="DisplayModeTemplate">
-            <Border BorderBrush="Blue" BorderThickness="1">
-                <TextBlock Foreground="Black" Background="Transparent" Margin="5,3,5,3">
+            <Border BorderBrush="{Binding Path=TextBorder,ElementName=mainControl}" BorderThickness="1">
+                <TextBlock Foreground="{Binding Path=TextForeground,ElementName=mainControl}" Background="Transparent" Margin="5,3,5,3">
                     <TextBlock.Text>
                         <Binding Path="Text" ElementName="mainControl"/>
                     </TextBlock.Text>

@@ -151,7 +151,8 @@ namespace ProcessCapture
                 mouseMoveText = new EditableTextBlock();
                 mouseMoveText.IsEditable = false;
                 mouseMoveText.Text = "Sample Text";
-                mouseMoveText.Foreground = (SolidColorBrush)lineColour.SelectedItem;
+                mouseMoveText.TextForeground = (SolidColorBrush)lineColour.SelectedItem;
+                mouseMoveText.TextBorder = (SolidColorBrush)fillColour.SelectedItem;
                 drawingCanvas.Children.Add(mouseMoveText);
             }
             else if (btnArrow.IsChecked == true || btnLine.IsChecked == true)

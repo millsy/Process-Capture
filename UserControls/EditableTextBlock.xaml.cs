@@ -84,6 +84,35 @@ namespace ProcessCapture.UserControls
                 }
             }
         }
+
+        public SolidColorBrush TextForeground
+        {
+            get { return (SolidColorBrush)GetValue(ForegroundProperty); }
+            set { SetValue(ForegroundProperty, value); }
+        }
+
+        public SolidColorBrush TextBorder
+        {
+            get { return (SolidColorBrush)GetValue(BorderProperty); }
+            set { SetValue(BorderProperty, value); }
+        }
+
+        public static readonly DependencyProperty BorderProperty =
+                    DependencyProperty.Register(
+                    "TextBorder",
+                    typeof(SolidColorBrush),
+                    typeof(EditableTextBlock),
+                    new PropertyMetadata(new SolidColorBrush(Colors.Transparent)));
+
+
+        public new static readonly DependencyProperty ForegroundProperty =
+            DependencyProperty.Register(
+            "TextForeground",
+            typeof(SolidColorBrush),
+            typeof(EditableTextBlock),
+            new PropertyMetadata(new SolidColorBrush(Colors.Black)));
+
+
         public static readonly DependencyProperty IsInEditModeProperty =
             DependencyProperty.Register(
             "IsInEditMode",
@@ -145,9 +174,13 @@ namespace ProcessCapture.UserControls
             }
             else if (e.Key == Key.Escape)
             {
-                this.IsInEditMode = false;
-                this.IsEditable = false;
+                //this.IsInEditMode = false;
+                //this.IsEditable = false;
                 Text = oldText;
+                if (sender as TextBox != null)
+                {
+                    (sender as TextBox).SelectAll();
+                }
                 e.Handled = true;
             }
         }
