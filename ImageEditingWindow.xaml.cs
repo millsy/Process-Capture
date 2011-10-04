@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ProcessCapture.Screenshot;
 using OpenSpanWPF;
+using ProcessCapture.UserControls;
 
 namespace ProcessCapture
 {
@@ -52,7 +53,7 @@ namespace ProcessCapture
         }
 
         private ScreenImage _screenImage;
-        private List<Shape> shapes = new List<Shape>();
+        private List<UIElement> shapes = new List<UIElement>();
 
         #region MouseMovement
         private void drawingCanvas_MouseMove(object sender, MouseEventArgs e)
@@ -95,6 +96,11 @@ namespace ProcessCapture
             {
                 mouseMoveText.SetValue(Canvas.LeftProperty, pointEnd.X);
                 mouseMoveText.SetValue(Canvas.TopProperty, pointEnd.Y);
+                //mouseMoveText.LostFocus += new RoutedEventHandler(mouseMoveText_LostFocus);
+                mouseMoveText.IsEditable = true;
+                mouseMoveText.IsInEditMode = true;
+                mouseMoveText.Focus();
+                shapes.Add(mouseMoveText);
             }
             else if (btnRect.IsChecked == true)
             {
@@ -110,13 +116,19 @@ namespace ProcessCapture
             }
             else if (btnPointer.IsChecked == true && moveableObject != null)
             {
-                if (moveableObject.GetType() == typeof(TextBlock))
+                if (moveableObject.GetType() == typeof(EditableTextBlock))
                 {
-                    (moveableObject as TextBlock).SetValue(Canvas.LeftProperty, pointEnd.X);
-                    (moveableObject as TextBlock).SetValue(Canvas.TopProperty, pointEnd.Y);
+                    (moveableObject as EditableTextBlock).SetValue(Canvas.LeftProperty, pointEnd.X);
+                    (moveableObject as EditableTextBlock).SetValue(Canvas.TopProperty, pointEnd.Y);
                 }
                 moveableObject = null;
             }
+        }
+
+        void mouseMoveText_LostFocus(object sender, RoutedEventArgs e)
+        {            
+            (sender as EditableTextBlock).IsEditable = false;
+            (sender as EditableTextBlock).IsInEditMode = false;
         }
 
         private void drawingCanvas_MouseDown(object sender, MouseButtonEventArgs e)
@@ -136,7 +148,8 @@ namespace ProcessCapture
             }
             else if (btnText.IsChecked == true)
             {
-                mouseMoveText = new TextBlock();
+                mouseMoveText = new EditableTextBlock();
+                mouseMoveText.IsEditable = false;
                 mouseMoveText.Text = "Sample Text";
                 mouseMoveText.Foreground = (SolidColorBrush)lineColour.SelectedItem;
                 drawingCanvas.Children.Add(mouseMoveText);
@@ -158,7 +171,7 @@ namespace ProcessCapture
             }
             else if (btnPointer.IsChecked == true)
             {
-                moveableObject = e.OriginalSource;
+                //moveableObject = drawingCanvas.Children[drawingCanvas.Children.Count - 1];// e.OriginalSource;
             }
         }
 
@@ -212,7 +225,7 @@ namespace ProcessCapture
         Point pointEnd;
         bool IsMouseDown;
 
-        TextBlock mouseMoveText = new TextBlock();
+        EditableTextBlock mouseMoveText = new EditableTextBlock();
         Rectangle mouseMoveRec = new Rectangle();
         Arrow mouseMoveLine = new Arrow();
         #endregion
@@ -252,7 +265,7 @@ namespace ProcessCapture
         {
             if (drawingCanvas != null && shapes.Count > 0)
             {
-                Shape s = shapes[shapes.Count - 1];
+                UIElement s = shapes[shapes.Count - 1];
                 if (drawingCanvas.Children.Contains(s))
                 {
                     e.CanExecute = true;
@@ -264,7 +277,7 @@ namespace ProcessCapture
 
         private void undoImage_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Shape s = shapes[shapes.Count - 1];
+            UIElement s = shapes[shapes.Count - 1];
             if (drawingCanvas.Children.Contains(s))
             {
                 drawingCanvas.Children.Remove(s);
