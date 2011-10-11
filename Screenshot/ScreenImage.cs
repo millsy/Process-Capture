@@ -156,6 +156,17 @@ namespace ProcessCapture.Screenshot
             Bitmap = new Bitmap(_filename);
         }
 
+        public string Timestamp { 
+            get {
+                if (this.Filename != null && File.Exists(this.Filename))
+                {
+                    return File.GetCreationTime(this.Filename).ToString("HH:mm:ss   dd MMM yyyy");
+                }
+
+                return "";
+            } 
+        }
+
         public string Title { get { return _title; } set { _title = value; } }
         public string Path { get { return _path; } set { _path = value; } }
         public string[] Modules { get { return _modules; } set { _modules = value; } }

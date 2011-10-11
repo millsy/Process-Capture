@@ -43,6 +43,7 @@ namespace ProcessCapture
                     UpdateBookmark(si.Title, oEndOfDoc, oDoc, 16, 1);
                     UpdateBookmark("URL: " + si.ApplicationURL, oEndOfDoc, oDoc, 11, 0);
                     UpdateBookmark("Path: " + si.Path, oEndOfDoc, oDoc, 11, 0);
+                    UpdateBookmark("Screenshot taken at " + si.Timestamp, oEndOfDoc, oDoc, 11, 0);
                     UpdateBookmark(si.Notes, oEndOfDoc, oDoc, 11, 0);
                     UpdateBookmarkWithImage(si.Filename, oEndOfDoc, oDoc);
                     InsertPageBreak(oDoc);

@@ -59,6 +59,7 @@
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="3*"/>
                                 <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
 
                             <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"  Margin="5" Style="{DynamicResource GeneralText}">Title:</TextBlock>
@@ -76,7 +77,10 @@
                             <TextBlock Grid.Row="4" Grid.Column="0"  Margin="5" Style="{DynamicResource GeneralText}" VerticalAlignment="Center">Notes:</TextBlock>
                             <TextBox KeyDown="txtTitle_KeyDown" Margin="5" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" Style="{DynamicResource TextBox_MultipleLines}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Grid.Row="4" Grid.Column="1"  Text="{Binding Notes}"/>
                             
-                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                            <TextBlock Grid.Row="5" Grid.Column="0"  Margin="5" Style="{DynamicResource GeneralText}" VerticalAlignment="Center">Taken:</TextBlock>
+                            <TextBox Margin="5" IsReadOnly="True" VerticalAlignment="Center" x:Name="txtTime" MaxLines="1" HorizontalContentAlignment="Left" FontSize="13" VerticalContentAlignment="Center" Style="{DynamicResource TextBox_Singleline}" TextWrapping="Wrap" AcceptsReturn="False" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Grid.Row="5" Grid.Column="1" Text="{Binding Timestamp, Mode=OneWay}"/>
+                            
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2">
                                 <Button Width="150" Command="pc:Commands.ShowImage" CommandParameter="{Binding}" Margin="5" x:Name="btnShowImage" Style="{DynamicResource Button_RectangleDropShadow}" VerticalAlignment="Center">
                                     <TextBlock Text="Edit image" TextWrapping="Wrap" FontFamily="{DynamicResource Font_Base}" FontSize="13" FontWeight="Normal" Foreground="{DynamicResource Brush_TextDarkGrey}" Margin="12,0"/>
                                 </Button>
